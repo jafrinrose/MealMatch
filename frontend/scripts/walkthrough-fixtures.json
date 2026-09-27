@@ -1,0 +1,619 @@
+{
+ "_note": "Sample kitchen for scripts/capture-walkthrough.mjs. Recipes are real MealMatch model output and swaps come from backend/substitutions.py (pantry and kitchen table, no model call); everything else is illustrative demo data.",
+ "request": "a cosy pasta night",
+ "recipes": [
+  {
+   "id": 9001,
+   "title": "Creamy Tomato Pasta Bake",
+   "ingredients": "pasta,red onion,onion,tomatoes,grape tomato,milk,egg,butter",
+   "ingredient_details": [
+    {
+     "name": "pasta",
+     "amount": 8.0,
+     "unit": "oz"
+    },
+    {
+     "name": "red onion",
+     "amount": 1.0,
+     "unit": "cup"
+    },
+    {
+     "name": "onion",
+     "amount": 1.0,
+     "unit": "cup"
+    },
+    {
+     "name": "tomatoes",
+     "amount": 2.0,
+     "unit": "cups"
+    },
+    {
+     "name": "grape tomato",
+     "amount": 1.0,
+     "unit": "cup"
+    },
+    {
+     "name": "milk",
+     "amount": 2.0,
+     "unit": "cups"
+    },
+    {
+     "name": "egg",
+     "amount": 1.0,
+     "unit": "portion"
+    },
+    {
+     "name": "butter",
+     "amount": 4.0,
+     "unit": "tbsp"
+    }
+   ],
+   "instructions": "Preheat the oven to 375°F (190°C). Cook pasta according to the package instructions until al dente. Drain and set aside.\nIn a large skillet, sauté the red onion and onion over medium heat until softened. Add the grape tomatoes and cook for an additional 3 minutes.\nIn a large mixing bowl, combine cooked pasta, tomato mixture, milk, egg, and butter. Mix well to combine.\nTransfer the pasta mixture to a baking dish and bake in the preheated oven for 20 minutes or until golden brown on top.",
+   "instruction_steps": [
+    "Preheat the oven to 375°F (190°C).",
+    "Cook pasta according to the package instructions until al dente.",
+    "Drain and set aside.",
+    "In a large skillet, sauté the red onion and onion over medium heat until softened.",
+    "Add the grape tomatoes and cook for an additional 3 minutes.",
+    "In a large mixing bowl, combine cooked pasta, tomato mixture, milk, egg, and butter.",
+    "Mix well to combine.",
+    "Transfer the pasta mixture to a baking dish and bake in the preheated oven for 20 minutes or until golden brown on top."
+   ],
+   "step_details": [
+    {
+     "instruction": "Preheat the oven to 375°F (190°C). Cook pasta according to the package instructions until al dente. Drain and set aside.",
+     "minutes": 10
+    },
+    {
+     "instruction": "In a large skillet, sauté the red onion and onion over medium heat until softened. Add the grape tomatoes and cook for an additional 3 minutes.",
+     "minutes": 8
+    },
+    {
+     "instruction": "In a large mixing bowl, combine cooked pasta, tomato mixture, milk, egg, and butter. Mix well to combine.",
+     "minutes": 10
+    },
+    {
+     "instruction": "Transfer the pasta mixture to a baking dish and bake in the preheated oven for 20 minutes or until golden brown on top.",
+     "minutes": 15
+    }
+   ],
+   "cooking_time": 30,
+   "prep_time": 15,
+   "total_time": 45,
+   "difficulty": "Beginner",
+   "cuisine": "Italian",
+   "calories": 420,
+   "servings": 2,
+   "image_url": "",
+   "source": "MealMatch AI",
+   "source_id": "",
+   "saved": false
+  },
+  {
+   "id": 9002,
+   "title": "Spaghetti Aglio e Olio with Tomato and Grape Tomatoes",
+   "ingredients": "spaghetti,red onion,egg,tomatoes,grape tomato,olive oil,salt",
+   "ingredient_details": [
+    {
+     "name": "spaghetti",
+     "amount": 8.0,
+     "unit": "oz"
+    },
+    {
+     "name": "red onion",
+     "amount": 1.0,
+     "unit": "cup"
+    },
+    {
+     "name": "egg",
+     "amount": 2.0,
+     "unit": "pieces"
+    },
+    {
+     "name": "tomatoes",
+     "amount": 2.0,
+     "unit": "cups"
+    },
+    {
+     "name": "grape tomato",
+     "amount": 4.0,
+     "unit": "oz"
+    },
+    {
+     "name": "olive oil",
+     "amount": 1.0,
+     "unit": "cup"
+    },
+    {
+     "name": "salt",
+     "amount": 1.0,
+     "unit": "tsp"
+    }
+   ],
+   "instructions": "Bring a large pot of salted water to a boil and cook the spaghetti according to package instructions until al dente.\nWhile the spaghetti is cooking, heat olive oil in a large skillet over medium-high heat. Add sliced red onion and cook for about 3 minutes or until translucent.\nAdd garlic to the skillet (use one of the egg pieces minced) and cook for another minute, stirring constantly to prevent burning.\nAdd chopped tomatoes and grape tomato. Stir in cooked spaghetti from pot. Simmer sauce together for a few minutes until the flavors are combined.",
+   "instruction_steps": [
+    "Bring a large pot of salted water to a boil and cook the spaghetti according to package instructions until al dente.",
+    "While the spaghetti is cooking, heat olive oil in a large skillet over medium-high heat.",
+    "Add sliced red onion and cook for about 3 minutes or until translucent.",
+    "Add garlic to the skillet (use one of the egg pieces minced) and cook for another minute, stirring constantly to prevent burning.",
+    "Add chopped tomatoes and grape tomato.",
+    "Stir in cooked spaghetti from pot.",
+    "Simmer sauce together for a few minutes until the flavors are combined."
+   ],
+   "step_details": [
+    {
+     "instruction": "Bring a large pot of salted water to a boil and cook the spaghetti according to package instructions until al dente.",
+     "minutes": 8
+    },
+    {
+     "instruction": "While the spaghetti is cooking, heat olive oil in a large skillet over medium-high heat. Add sliced red onion and cook for about 3 minutes or until translucent.",
+     "minutes": 15
+    },
+    {
+     "instruction": "Add garlic to the skillet (use one of the egg pieces minced) and cook for another minute, stirring constantly to prevent burning.",
+     "minutes": 2
+    },
+    {
+     "instruction": "Add chopped tomatoes and grape tomato. Stir in cooked spaghetti from pot. Simmer sauce together for a few minutes until the flavors are combined.",
+     "minutes": 8
+    }
+   ],
+   "cooking_time": 20,
+   "prep_time": 10,
+   "total_time": 30,
+   "difficulty": "Beginner",
+   "cuisine": "Italian",
+   "calories": 400,
+   "servings": 2,
+   "image_url": "",
+   "source": "MealMatch AI",
+   "source_id": "",
+   "saved": false
+  },
+  {
+   "id": 9003,
+   "title": "Cheesy Garlic Bread Pasta Bake",
+   "ingredients": "pasta,red onion,garlic,tomatoes,bread,milk,eggs",
+   "ingredient_details": [
+    {
+     "name": "pasta",
+     "amount": 1.0,
+     "unit": "cup"
+    },
+    {
+     "name": "red onion",
+     "amount": 0.5,
+     "unit": "cup"
+    },
+    {
+     "name": "garlic",
+     "amount": 3.0,
+     "unit": "cloves"
+    },
+    {
+     "name": "tomatoes",
+     "amount": 2.0,
+     "unit": "cups"
+    },
+    {
+     "name": "bread",
+     "amount": 1.0,
+     "unit": "loaf"
+    },
+    {
+     "name": "milk",
+     "amount": 0.5,
+     "unit": "cup"
+    },
+    {
+     "name": "eggs",
+     "amount": 2.0,
+     "unit": "eggs"
+    }
+   ],
+   "instructions": "Preheat the oven to 375°F (190°C). Slice the bread into 1-inch thick slices.\nCook the pasta according to package instructions until al dente. Drain and set aside.\nIn a large skillet, sauté the red onion and garlic in a little bit of oil until softened.\nIn a separate saucepan, mix together milk, eggs, and tomatoes. Simmer for 5-7 minutes until slightly thickened. Combine cooked pasta and tomato mixture in a baking dish. Top with bread slices and grated cheese (optional) and bake for 15-20 minutes until golden brown.",
+   "instruction_steps": [
+    "Preheat the oven to 375°F (190°C).",
+    "Slice the bread into 1-inch thick slices.",
+    "Cook the pasta according to package instructions until al dente.",
+    "Drain and set aside.",
+    "In a large skillet, sauté the red onion and garlic in a little bit of oil until softened.",
+    "In a separate saucepan, mix together milk, eggs, and tomatoes.",
+    "Simmer for 5-7 minutes until slightly thickened.",
+    "Combine cooked pasta and tomato mixture in a baking dish.",
+    "Top with bread slices and grated cheese (optional) and bake for 15-20 minutes until golden brown."
+   ],
+   "step_details": [
+    {
+     "instruction": "Preheat the oven to 375°F (190°C). Slice the bread into 1-inch thick slices.",
+     "minutes": 10
+    },
+    {
+     "instruction": "Cook the pasta according to package instructions until al dente. Drain and set aside.",
+     "minutes": 8
+    },
+    {
+     "instruction": "In a large skillet, sauté the red onion and garlic in a little bit of oil until softened.",
+     "minutes": 10
+    },
+    {
+     "instruction": "In a separate saucepan, mix together milk, eggs, and tomatoes. Simmer for 5-7 minutes until slightly thickened. Combine cooked pasta and tomato mixture in a baking dish. Top with bread slices and grated cheese (optional) and bake for 15-20 minutes until golden brown.",
+     "minutes": 12
+    }
+   ],
+   "cooking_time": 25,
+   "prep_time": 15,
+   "total_time": 40,
+   "difficulty": "Beginner",
+   "cuisine": "Italian-American",
+   "calories": 420,
+   "servings": 2,
+   "image_url": "",
+   "source": "MealMatch AI",
+   "source_id": "",
+   "saved": false
+  }
+ ],
+ "substitutions": {
+  "9001": {
+   "recipe_id": 9001,
+   "missing_ingredients": [
+    "pasta",
+    "butter"
+   ],
+   "substitutions": [
+    {
+     "ingredient": "pasta",
+     "suggestions": [
+      {
+       "name": "rice noodle",
+       "reason": "Soak or boil briefly.",
+       "in_pantry": false
+      },
+      {
+       "name": "zucchini noodle",
+       "reason": "A lighter option.",
+       "in_pantry": false
+      }
+     ]
+    },
+    {
+     "ingredient": "butter",
+     "suggestions": [
+      {
+       "name": "olive oil",
+       "reason": "Use about three quarters as much; best in savoury cooking.",
+       "in_pantry": false
+      },
+      {
+       "name": "coconut oil",
+       "reason": "Same amount; works in baking.",
+       "in_pantry": false
+      },
+      {
+       "name": "margarine",
+       "reason": "Same amount.",
+       "in_pantry": false
+      }
+     ]
+    }
+   ]
+  },
+  "9002": {
+   "recipe_id": 9002,
+   "missing_ingredients": [
+    "spaghetti",
+    "olive oil",
+    "salt"
+   ],
+   "substitutions": [
+    {
+     "ingredient": "spaghetti",
+     "suggestions": [
+      {
+       "name": "linguine",
+       "reason": "Same cooking.",
+       "in_pantry": false
+      },
+      {
+       "name": "rice noodle",
+       "reason": "Soak or boil briefly.",
+       "in_pantry": false
+      }
+     ]
+    },
+    {
+     "ingredient": "olive oil",
+     "suggestions": [
+      {
+       "name": "garlic butter",
+       "reason": "Same amount, melted; richer.",
+       "in_pantry": true
+      },
+      {
+       "name": "vegetable oil",
+       "reason": "Same amount.",
+       "in_pantry": false
+      }
+     ]
+    },
+    {
+     "ingredient": "salt",
+     "suggestions": []
+    }
+   ]
+  },
+  "9003": {
+   "recipe_id": 9003,
+   "missing_ingredients": [
+    "pasta",
+    "garlic"
+   ],
+   "substitutions": [
+    {
+     "ingredient": "pasta",
+     "suggestions": [
+      {
+       "name": "rice noodle",
+       "reason": "Soak or boil briefly.",
+       "in_pantry": false
+      },
+      {
+       "name": "zucchini noodle",
+       "reason": "A lighter option.",
+       "in_pantry": false
+      }
+     ]
+    },
+    {
+     "ingredient": "garlic",
+     "suggestions": [
+      {
+       "name": "garlic powder",
+       "reason": "1/8 tsp per clove.",
+       "in_pantry": false
+      },
+      {
+       "name": "shallot",
+       "reason": "A different but gentle flavour.",
+       "in_pantry": false
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "insights": {
+  "meals_cooked": 14,
+  "meals_this_week": 3,
+  "last_meal": "Creamy Tomato Pasta Bake",
+  "top_ingredient": "spinach",
+  "ingredients_used": 61,
+  "rescued_items": 23,
+  "rescue_rate": 38,
+  "estimated_savings": 0,
+  "last_rescue_count": 2,
+  "last_estimated_savings": 0,
+  "estimated_grams_saved": 4120,
+  "estimated_co2e_kg": 10.3,
+  "rescue_window_days": 5,
+  "weekly_rescues": [
+   {
+    "week_start": "2026-08-03",
+    "count": 1
+   },
+   {
+    "week_start": "2026-08-10",
+    "count": 2
+   },
+   {
+    "week_start": "2026-08-17",
+    "count": 3
+   },
+   {
+    "week_start": "2026-08-24",
+    "count": 2
+   },
+   {
+    "week_start": "2026-08-31",
+    "count": 4
+   },
+   {
+    "week_start": "2026-09-07",
+    "count": 3
+   },
+   {
+    "week_start": "2026-09-14",
+    "count": 5
+   },
+   {
+    "week_start": "2026-09-21",
+    "count": 3
+   }
+  ],
+  "rescue_events": [
+   {
+    "session_id": 1,
+    "ingredient": "spinach",
+    "recipe_title": "Creamy Tomato Pasta Bake",
+    "quantity_used": "120 g",
+    "days_to_expiry": 1,
+    "estimated_grams": 120
+   },
+   {
+    "session_id": 1,
+    "ingredient": "cherry tomatoes",
+    "recipe_title": "Creamy Tomato Pasta Bake",
+    "quantity_used": "250 g",
+    "days_to_expiry": 0,
+    "estimated_grams": 250
+   },
+   {
+    "session_id": 2,
+    "ingredient": "chicken breast",
+    "recipe_title": "Lemon Herb Chicken Traybake",
+    "quantity_used": "2 pieces",
+    "days_to_expiry": 2,
+    "estimated_grams": 500
+   }
+  ],
+  "at_risk_count": 4,
+  "at_risk_items": [
+   {
+    "ingredient": "mushrooms",
+    "days_left": 1
+   },
+   {
+    "ingredient": "greek yogurt",
+    "days_left": 2
+   },
+   {
+    "ingredient": "basil",
+    "days_left": 2
+   },
+   {
+    "ingredient": "red peppers",
+    "days_left": 4
+   }
+  ]
+ },
+ "shopping": [
+  {
+   "id": 90001,
+   "user_id": 1,
+   "recipe_id": 190,
+   "ingredient": "spaghetti",
+   "quantity": "320 g",
+   "checked": true
+  },
+  {
+   "id": 90002,
+   "user_id": 1,
+   "recipe_id": 190,
+   "ingredient": "guanciale",
+   "quantity": "150 g",
+   "checked": false
+  },
+  {
+   "id": 90003,
+   "user_id": 1,
+   "recipe_id": 190,
+   "ingredient": "pecorino romano",
+   "quantity": "60 g",
+   "checked": false
+  },
+  {
+   "id": 90004,
+   "user_id": 1,
+   "recipe_id": null,
+   "ingredient": "oat milk",
+   "quantity": "1 carton",
+   "checked": false
+  },
+  {
+   "id": 90005,
+   "user_id": 1,
+   "recipe_id": null,
+   "ingredient": "lemons",
+   "quantity": "3 pieces",
+   "checked": true
+  }
+ ],
+ "scan": {
+  "filename": "fridge.png",
+  "scan_id": "sample-scan",
+  "models": [
+   "Qwen2.5-VL 3B"
+  ],
+  "warnings": [],
+  "analysis_ms": 12600,
+  "detections": [
+   {
+    "ingredient": "spinach",
+    "quantity": "1 bag",
+    "confidence": 0.93,
+    "source": "Qwen2.5-VL 3B",
+    "category": "produce",
+    "visible_text": "",
+    "detection_id": "suggestion-1"
+   },
+   {
+    "ingredient": "broccoli",
+    "quantity": "1 piece",
+    "confidence": 0.91,
+    "source": "Qwen2.5-VL 3B",
+    "category": "produce",
+    "visible_text": "",
+    "detection_id": "suggestion-2"
+   },
+   {
+    "ingredient": "milk",
+    "quantity": "1 carton",
+    "confidence": 0.9,
+    "source": "Qwen2.5-VL 3B",
+    "category": "dairy",
+    "visible_text": "Whole milk",
+    "detection_id": "suggestion-3"
+   },
+   {
+    "ingredient": "cherry tomatoes",
+    "quantity": "1 packet",
+    "confidence": 0.88,
+    "source": "Qwen2.5-VL 3B",
+    "category": "produce",
+    "visible_text": "",
+    "detection_id": "suggestion-4"
+   },
+   {
+    "ingredient": "carrots",
+    "quantity": "4 pieces",
+    "confidence": 0.86,
+    "source": "Qwen2.5-VL 3B",
+    "category": "produce",
+    "visible_text": "",
+    "detection_id": "suggestion-5"
+   },
+   {
+    "ingredient": "eggs",
+    "quantity": "1 carton",
+    "confidence": 0.84,
+    "source": "Qwen2.5-VL 3B",
+    "category": "protein",
+    "visible_text": "",
+    "detection_id": "suggestion-6"
+   },
+   {
+    "ingredient": "lemons",
+    "quantity": "3 pieces",
+    "confidence": 0.8,
+    "source": "Qwen2.5-VL 3B",
+    "category": "produce",
+    "visible_text": "",
+    "detection_id": "suggestion-7"
+   }
+  ],
+  "message": "Confirm results before saving."
+ },
+ "session": {
+  "id": 900,
+  "user_id": 1,
+  "recipe_id": 9001,
+  "servings": 2,
+  "status": "active",
+  "current_step": 1,
+  "messages": [
+   {
+    "id": 1,
+    "role": "user",
+    "text": "How do I know the pasta is al dente?",
+    "created_at": "2026-09-27T10:00:00+00:00"
+   },
+   {
+    "id": 2,
+    "role": "assistant",
+    "text": "Taste a piece a minute before the packet time. It should be tender with a slight bite in the centre.",
+    "created_at": "2026-09-27T10:00:05+00:00"
+   }
+  ]
+ }
+}

@@ -1,0 +1,22 @@
+__pycache__/
+*.py[cod]
+backend/venv/
+backend/.model_cache/
+backend/.photo_cache/
+weights/
+*.pt
+!backend/weights/
+!backend/weights/mealmatch-yolo-world-food.pt
+data/
+artifacts/
+backend/uploads/*
+
+# Working database: pantry, cooking chats and user-study records stay local.
+# A fresh clone starts from backend/mealmatch_starter.db.
+backend/mealmatch.db
+backend/mealmatch.db-*
+
+# macOS folder files and Office lock files (they hold the account name)
+.DS_Store
+~$*
+.~*

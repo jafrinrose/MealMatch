@@ -1,0 +1,22 @@
+{
+  "expected": {
+    "semi skimmed milk": "2",
+    "egg": "6 pieces",
+    "gala apple": "6 pieces",
+    "breakfast sausage": "454 g",
+    "baby spinach": "200 g",
+    "cheddar": "400 g",
+    "basmati rice": "1 kg",
+    "tomato": "800 g",
+    "carrot": "0.51 kg",
+    "lemon": "3",
+    "hummus": "200 g",
+    "oat milk": "1 l"
+  },
+  "excluded": [
+    "bin bag",
+    "kitchen roll",
+    "toothpaste",
+    "cat food"
+  ]
+}

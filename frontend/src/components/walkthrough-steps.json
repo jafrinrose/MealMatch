@@ -1,0 +1,102 @@
+{
+  "home": {
+    "image": "/walkthrough/home.jpg",
+    "x": 0.2986,
+    "y": 0.498,
+    "zoom": {
+      "x": 0.5806,
+      "y": 0.4002,
+      "scale": 1.08
+    }
+  },
+  "add": {
+    "image": "/walkthrough/add.jpg",
+    "x": 0.5,
+    "y": 0.8631,
+    "zoom": {
+      "x": 0.5,
+      "y": 0.6904,
+      "scale": 1.08
+    }
+  },
+  "confirm": {
+    "image": "/walkthrough/confirm.jpg",
+    "x": 0.5,
+    "y": 1.1708,
+    "zoom": {
+      "x": 0.5,
+      "y": 0.6111,
+      "scale": 1.08
+    }
+  },
+  "pantry": {
+    "image": "/walkthrough/pantry.jpg",
+    "x": 0.3063,
+    "y": 0.0858,
+    "zoom": {
+      "x": 0.5806,
+      "y": 2.643,
+      "scale": 1.12
+    }
+  },
+  "recipes": {
+    "image": "/walkthrough/recipes.jpg",
+    "x": 0.5926,
+    "y": -0.242,
+    "zoom": {
+      "x": 0.5806,
+      "y": 1.324,
+      "scale": 1.08
+    }
+  },
+  "ai": {
+    "image": "/walkthrough/ai.jpg",
+    "x": 0.3196,
+    "y": 0.7005,
+    "zoom": {
+      "x": 0.5806,
+      "y": 0.6352,
+      "scale": 1.1
+    }
+  },
+  "recipe": {
+    "image": "/walkthrough/recipe.jpg",
+    "x": 0.4748,
+    "y": 0.1732,
+    "zoom": {
+      "x": 0.3588,
+      "y": 0.461,
+      "scale": 1.12
+    }
+  },
+  "shopping": {
+    "image": "/walkthrough/shopping.jpg",
+    "x": 0.2226,
+    "y": 0.6338,
+    "zoom": {
+      "x": 0.5806,
+      "y": 0.7618,
+      "scale": 1.1
+    }
+  },
+  "cooking": {
+    "image": "/walkthrough/cooking.jpg",
+    "x": 0.8426,
+    "y": 0.3795,
+    "zoom": {
+      "x": 0.5806,
+      "y": 0.3795,
+      "scale": 1.16
+    }
+  },
+  "impact": {
+    "image": "/walkthrough/impact.jpg",
+    "x": 0.3501,
+    "y": 0.32,
+    "zoom": {
+      "x": 0.5806,
+      "y": 0.5005,
+      "scale": 1.1
+    }
+  }
+}

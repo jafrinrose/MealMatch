@@ -1,0 +1,176 @@
+/*
+ * The "Open the fridge" landing film (ported from a standalone prototype page).
+ * Every class is prefixed fi- so the app's own .toast, .button or .caption rules
+ * never reach it.
+ *
+ * Performance: on large windows the original dropped frames because several
+ * full-screen layers were oversized (up to 170vmax), blurred or blended every
+ * frame. Soft light layers are now drawn at half size and scaled up (they are
+ * gradients, so nothing is lost), CSS blurs on gradients are gone, the room's
+ * focus pull crossfades to a pre-blurred photo, and the dust canvas is capped
+ * at about one million pixels.
+ */
+@font-face { font-family: "MM Intro Serif"; src: url("../assets/instrument-serif-regular.ttf") format("truetype"); font-style: normal; font-weight: 400; font-display: block; }
+@font-face { font-family: "MM Intro Serif"; src: url("../assets/instrument-serif-italic.ttf") format("truetype"); font-style: italic; font-weight: 400; font-display: block; }
+
+.fi { --ink: #050807; --lime: #cbef72; --bone: #eef3ea; --sage: #9fb3a6; --bar: clamp(38px, 8vh, 78px); --safe-x: clamp(24px, 4.15vw, 72px);
+  position: relative; z-index: 3000; color: var(--bone); background: var(--ink); font-family: "Inter Tight Variable", "Inter Tight", sans-serif; -webkit-font-smoothing: antialiased; }
+.fi *, .fi *::before, .fi *::after { box-sizing: border-box; }
+/* :where() keeps these resets at class weight, so .fi-button and friends can override them. */
+.fi :where(button, a) { font: inherit; color: inherit; }
+.fi :where(button) { border: 0; }
+.fi :where(button, a):focus-visible { outline: 2px solid var(--lime); outline-offset: 5px; }
+.fi.is-ready.is-frozen .fi-stage { opacity: 1; transition: none; }
+.fi.is-frozen .fi-preloader { display: none; }
+/* Leaving: the film stops scrolling, stays on its last frame and fades to reveal the app. */
+.fi.is-leaving { position: fixed; inset: 0; pointer-events: none; opacity: 0; transition: opacity .75s cubic-bezier(.4, 0, .2, 1); }
+.fi.is-leaving .fi-experience, .fi.is-leaving .fi-stage { position: absolute !important; inset: 0; transform: none !important; }
+
+.fi-experience { height: 100vh; background: var(--ink); }
+.fi-stage { position: relative; width: 100%; height: 100svh; min-height: 520px; overflow: hidden; isolation: isolate; background: #020303; opacity: 0; }
+.fi.is-ready .fi-stage { opacity: 1; transition: opacity 1.8s cubic-bezier(.22, .61, .36, 1); }
+.fi-scene, .fi-camera, .fi-cover { position: absolute; inset: 0; width: 100%; height: 100%; }
+.fi-camera { transform-origin: 50% 50%; will-change: transform; }
+.fi-cover { display: block; object-fit: cover; user-select: none; pointer-events: none; }
+
+.fi-kitchen { overflow: hidden; background: #030706; }
+.fi-kitchen-bg { filter: brightness(.52) saturate(.85); will-change: transform, filter; }
+/* Drawn at a quarter of the pixels and scaled up: it is blurred, so nothing is lost. */
+.fi-kitchen-bg-blur { left: 25%; top: 25%; width: 50%; height: 50%; opacity: 0; transform: scale(2); filter: brightness(.52) saturate(.85); will-change: transform, filter, opacity; }
+/* Width is half the height (2:3), so -height/3 centres it; JS then moves it with one transform from its top-left corner. */
+.fi-fridge-camera { position: absolute; left: 50%; bottom: 10%; height: min(76vh, 180vw); aspect-ratio: 2 / 3; margin-left: calc(min(76vh, 180vw) / -3); transform-origin: 0 0; perspective: calc(min(76vh, 180vw) * .76); perspective-origin: 50% 45%; will-change: transform; }
+.fi-fridge { position: absolute; inset: 0; transform-style: preserve-3d; }
+.fi-fridge-interior { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; object-fit: contain; filter: brightness(.14) saturate(.8); will-change: filter; }
+.fi-fridge-bloom { position: absolute; left: 30%; top: 12%; z-index: 0; width: 40%; height: 58%; background: radial-gradient(ellipse, rgba(195, 232, 255, .8), rgba(88, 174, 216, .16) 45%, transparent 72%); opacity: 0; }
+/* The door stays a plain 3D node: will-change:filter/opacity here would flatten it and hide the inside panel. */
+.fi-door { position: absolute; inset: 0; z-index: 3; transform-origin: 27.05% 50%; transform-style: preserve-3d; will-change: transform; }
+.fi-door-face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.fi-door-face img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.fi-door-face--front { transform: translateZ(.5px); }
+.fi-door-face--back { transform: translateZ(calc(var(--fi-door-t, 20px) * -1)) rotateY(180deg); }
+.fi-door-sheen { position: absolute; left: 27.05%; top: .3%; width: 46%; height: 99.1%; border-radius: 1.6% / 1%; pointer-events: none; mix-blend-mode: screen; opacity: 0; background: linear-gradient(104deg, transparent 0 40%, rgba(200, 226, 244, .14) 46%, rgba(255, 255, 255, .34) 50%, rgba(200, 226, 244, .14) 54%, transparent 60% 100%) no-repeat; background-size: 340% 100%; background-position: 120% 0; }
+.fi-door-edge { position: absolute; left: 73%; top: .6%; width: var(--fi-door-t, 20px); height: 98.6%; transform-origin: left center; transform: rotateY(90deg); background: linear-gradient(90deg, #111917, #55615f 45%, #0c1110); backface-visibility: hidden; }
+.fi-door-seam { position: absolute; z-index: 4; right: 26.8%; top: 4%; width: 2px; height: 91%; background: linear-gradient(180deg, transparent, rgba(191, 232, 255, .96) 15%, rgba(211, 241, 255, .7) 80%, transparent); box-shadow: 0 0 5px rgba(154, 224, 255, .9), 0 0 18px rgba(111, 209, 255, .5); opacity: 0; }
+
+/* Light: half-size layers scaled up by the GPU, blended normally. Screen blending looked much the
+   same over the dark room but made the browser redraw everything beneath each layer every frame. */
+.fi-floor-light { position: absolute; left: 44%; top: 72%; width: 52%; height: 24%; border-radius: 50%; transform: translate(-50%, -50%); background: radial-gradient(ellipse, rgba(144, 221, 255, .36), rgba(92, 168, 205, .14) 40%, transparent 70%); opacity: 0; will-change: transform, opacity; }
+.fi-light-wash { position: absolute; left: 15%; top: 15%; width: 70%; height: 70%; transform: scale(2); background: radial-gradient(circle at 50% 42%, rgba(190, 235, 255, .75), rgba(76, 155, 190, .18) 22%, transparent 55%); opacity: 0; will-change: transform, opacity; }
+.fi-rays { position: absolute; left: 10%; top: 10%; width: 80%; height: 80%; transform-origin: 50% 42%; background: repeating-conic-gradient(from 244deg at 50% 42%, rgba(182, 230, 255, .1) 0 1.4deg, transparent 2.6deg 7deg), repeating-conic-gradient(from 249deg at 50% 42%, rgba(104, 197, 235, .07) 0 2deg, transparent 3deg 11deg); -webkit-mask-image: radial-gradient(circle at 50% 42%, #000 0 12%, transparent 62%); mask-image: radial-gradient(circle at 50% 42%, #000 0 12%, transparent 62%); opacity: 0; will-change: transform, opacity; }
+.fi-flare { position: absolute; left: 50%; top: 42%; width: 94%; height: 2px; transform: translate(-50%, -50%); background: linear-gradient(90deg, transparent, rgba(145, 219, 255, .2) 25%, #e7f9ff 50%, rgba(145, 219, 255, .2) 75%, transparent); box-shadow: 0 0 7px 1px rgba(129, 218, 255, .5), 0 0 30px 8px rgba(77, 172, 218, .2); opacity: 0; will-change: opacity; }
+
+/* The shelf close-up: laid over the fridge's top shelf and moved with the same camera, so the
+   push-in reads as one continuous move instead of a cut between two photos. */
+.fi-zoom-plate { position: absolute; left: 0; top: 0; display: block; object-fit: cover; opacity: 0; transform-origin: 0 0; user-select: none; pointer-events: none; will-change: transform, opacity; }
+
+.fi-void { background: #020706; opacity: 0; will-change: opacity; }
+.fi-fog { position: absolute; width: 36vmax; height: 36vmax; border-radius: 50%; mix-blend-mode: screen; opacity: .3; will-change: transform; }
+.fi-fog--a { left: -4vmax; top: -2vmax; background: radial-gradient(circle, rgba(16, 93, 82, .4), transparent 70%); transform: scale(2); animation: fi-fog-a 13s ease-in-out infinite alternate; }
+.fi-fog--b { right: -10vmax; bottom: -14vmax; background: radial-gradient(circle, rgba(28, 78, 82, .3), transparent 70%); transform: scale(2); animation: fi-fog-b 17s ease-in-out infinite alternate; }
+@keyframes fi-fog-a { to { transform: translate(7vw, 5vh) scale(2.16); } }
+@keyframes fi-fog-b { to { transform: translate(-6vw, -4vh) scale(1.88); } }
+.fi-ingredients { position: absolute; inset: 0; perspective: 1000px; overflow: hidden; }
+.fi-ingredient { position: absolute; left: 0; top: 0; width: clamp(125px, 18vmin, 230px); height: auto; transform-origin: 50% 50%; will-change: transform, filter, opacity; pointer-events: none; user-select: none; }
+
+.fi-table { background: #090503; opacity: 0; will-change: opacity; }
+.fi-table-bg { filter: brightness(.7) saturate(.88); will-change: transform, filter, opacity; }
+.fi-dish-wrap { position: absolute; left: 50%; top: 57%; width: min(46vw, 570px); aspect-ratio: 1; transform: translate(-50%, -50%); will-change: transform, opacity; }
+.fi-dish { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; filter: blur(16px) brightness(.55); will-change: filter; }
+.fi-contact-shadow { position: absolute; left: 13%; right: 13%; bottom: 10%; height: 15%; border-radius: 50%; background: radial-gradient(ellipse closest-side, rgba(0, 0, 0, .76), rgba(0, 0, 0, .4) 55%, transparent); transform: scale(.82); opacity: 0; will-change: transform, opacity; }
+.fi-dish-glow { position: absolute; left: 50%; top: 54%; width: min(66vw, 820px); height: min(66vw, 820px); border-radius: 50%; transform: translate(-50%, -50%); background: radial-gradient(circle, rgba(255, 177, 75, .2), transparent 68%); mix-blend-mode: screen; opacity: 0; }
+.fi-dish-sheen { position: absolute; left: 4.6%; right: 4.6%; top: 13.2%; bottom: 13.2%; border-radius: 50%; pointer-events: none; mix-blend-mode: screen; opacity: 0; background: linear-gradient(112deg, transparent 0 38%, rgba(255, 196, 120, .16) 45%, rgba(255, 214, 160, .34) 50%, rgba(255, 196, 120, .16) 55%, transparent 62% 100%) no-repeat; background-size: 320% 100%; background-position: 110% 0; }
+.fi-steam { position: absolute; left: 30%; right: 30%; top: 8%; height: 42%; opacity: 0; filter: blur(7px); will-change: opacity; }
+.fi-steam i { position: absolute; bottom: 0; width: 11%; height: 72%; border-radius: 50%; border-left: 2px solid rgba(242, 244, 228, .34); transform-origin: 50% 100%; animation: fi-steam 3.8s ease-in-out infinite; }
+.fi-steam i:nth-child(1) { left: 18%; animation-delay: -1.2s; } .fi-steam i:nth-child(2) { left: 47%; height: 90%; animation-delay: -2.6s; } .fi-steam i:nth-child(3) { right: 16%; height: 62%; animation-delay: -.5s; }
+@keyframes fi-steam { 0% { transform: translateY(10%) rotate(-5deg) scaleX(.7); opacity: 0; } 25% { opacity: .7; } 100% { transform: translateY(-38%) rotate(8deg) scaleX(1.3); opacity: 0; } }
+
+.fi-dust { position: absolute; inset: 0; z-index: 18; width: 100%; height: 100%; pointer-events: none; opacity: 0; }
+.fi-flash { position: absolute; inset: 0; z-index: 24; pointer-events: none; overflow: hidden; }
+/* Smooth gradients, so they are drawn small and scaled up: the white at half size, the orb at a quarter. */
+.fi-flash-white { position: absolute; left: 22.5%; top: 22.5%; width: 55%; height: 55%; transform: scale(2); background: radial-gradient(circle at 50% 45%, #fff 0, #fdfeff 38%, #eef6fb 72%, #dcebf3 100%); opacity: 0; will-change: transform, opacity; }
+.fi-flash-orb { position: absolute; left: 50%; top: 45%; width: 42.5vmax; height: 42.5vmax; margin: -21.25vmax 0 0 -21.25vmax; border-radius: 50%; background: radial-gradient(circle, #fff 0, rgba(242, 250, 255, .94) 10%, rgba(196, 230, 250, .5) 26%, rgba(255, 214, 170, .08) 44%, rgba(130, 190, 240, .1) 48%, transparent 64%); opacity: 0; will-change: transform, opacity; }
+.fi-flash-streak { position: absolute; left: -10%; right: -10%; top: 45%; height: 3px; margin-top: -1.5px; background: linear-gradient(90deg, transparent, rgba(120, 190, 255, .5) 24%, #fff 50%, rgba(120, 190, 255, .5) 76%, transparent); box-shadow: 0 0 18px 4px rgba(140, 200, 255, .45), 0 0 70px 16px rgba(100, 170, 240, .16); opacity: 0; will-change: transform, opacity; }
+.fi-grade { position: absolute; inset: 0; z-index: 20; pointer-events: none; mix-blend-mode: soft-light; will-change: opacity; }
+.fi-grade--cool { background: #0c6a70; opacity: .18; } .fi-grade--warm { background: #ae5f25; opacity: 0; }
+.fi-vignette { position: absolute; inset: 0; z-index: 21; pointer-events: none; background: radial-gradient(ellipse at center, transparent 42%, rgba(0, 0, 0, .35) 72%, rgba(0, 0, 0, .76) 112%); }
+.fi-scrim { position: absolute; inset: auto 0 0; z-index: 22; height: 48%; pointer-events: none; background: linear-gradient(transparent, rgba(2, 5, 4, .74)); }
+/* Film grain without a blend mode: a plain faint layer costs one texture, not a full-screen blend. */
+.fi-grain { position: absolute; inset: -4%; z-index: 23; pointer-events: none; opacity: .05; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.78'/%3E%3C/svg%3E"); animation: fi-grain .22s steps(2) infinite; }
+@keyframes fi-grain { 0% { transform: translate(0); } 25% { transform: translate(2%, -1.5%); } 50% { transform: translate(-1.5%, 2%); } 75% { transform: translate(1.5%, 1.5%); } 100% { transform: translate(-2%, -1%); } }
+
+.fi-captions { position: absolute; z-index: 30; left: var(--safe-x); right: var(--safe-x); bottom: calc(var(--bar) + clamp(42px, 6vh, 76px)); pointer-events: none; }
+.fi-caption { position: absolute; left: 0; bottom: 0; width: min(620px, 46vw); opacity: 0; will-change: transform, filter, opacity; }
+.fi-eyebrow, .fi-note, .fi-brand-kicker { margin: 0 0 15px; color: var(--lime); font-size: 11px; font-weight: 650; letter-spacing: .22em; text-transform: uppercase; }
+.fi-note { margin: 18px 0 0; color: rgba(238, 243, 234, .62); letter-spacing: .16em; }
+/* The app sets every h1/h2 font with !important; the film keeps its own. */
+.fi-caption h1, .fi-caption h2 { margin: 0; font-family: "MM Intro Serif", Georgia, serif !important; font-size: clamp(52px, 6vw, 94px); font-weight: 400; line-height: .91; letter-spacing: -.035em; text-wrap: balance; text-shadow: 0 4px 28px rgba(0, 0, 0, .36); }
+.fi-caption h2 { font-size: clamp(48px, 5.5vw, 84px); }
+.fi-caption em { font-weight: 400; color: #dce9df; }
+.fi-word { display: inline-block; will-change: transform, opacity, filter; }
+
+.fi-brand { position: absolute; z-index: 31; left: 50%; bottom: clamp(72px, 10vh, 112px); width: min(680px, 90vw); text-align: center; transform: translateX(-50%); visibility: hidden; }
+.fi-brand > * { opacity: 0; will-change: transform, filter, opacity; }
+.fi-brand-kicker { margin-bottom: 12px; color: var(--sage); }
+.fi-brand h2 { margin: 0; font-family: "Inter Tight Variable", "Inter Tight", sans-serif !important; font-size: clamp(64px, 8vw, 116px); font-weight: 760; line-height: .88; letter-spacing: -.075em; }
+.fi-brand h2 span { color: var(--lime); }
+.fi-brand-tagline { margin: 18px 0 27px; color: var(--sage); font-size: clamp(15px, 1.3vw, 19px); letter-spacing: .01em; }
+.fi-brand-actions { display: flex; justify-content: center; gap: 10px; }
+.fi-button { height: 52px; padding: 0 24px; border-radius: 999px; cursor: pointer; font-weight: 650; letter-spacing: -.01em; transition: background .25s, color .25s, transform .25s; }
+.fi-button:hover { transform: translateY(-2px); }
+.fi-button--primary { color: #0a180e; background: var(--lime); } .fi-button--primary:hover { background: #ddff86; }
+.fi-button--ghost { color: var(--bone); background: rgba(238, 243, 234, .08); border: 1px solid rgba(238, 243, 234, .22) !important; }
+
+.fi-letterbox { position: absolute; z-index: 40; left: 0; width: 100%; height: var(--bar); background: #000; will-change: transform; }
+.fi-letterbox--top { top: 0; transform: translateY(-101%); } .fi-letterbox--bottom { bottom: 0; transform: translateY(101%); }
+.fi-topbar, .fi-bottombar { position: absolute; z-index: 41; left: var(--safe-x); right: var(--safe-x); display: grid; align-items: center; height: var(--bar); font-size: 10px; letter-spacing: .19em; text-transform: uppercase; }
+.fi-topbar { top: 0; grid-template-columns: 1fr auto 1fr; } .fi-bottombar { bottom: 0; grid-template-columns: 1fr auto 1fr; }
+.fi-topbar > p { margin: 0; color: rgba(238, 243, 234, .4); }
+.fi-mini-mark { display: flex; align-items: center; gap: 10px; width: max-content; padding: 0; background: none; font-weight: 750; letter-spacing: .19em; text-transform: uppercase; cursor: pointer; }
+.fi-mini-mark i { width: 7px; height: 7px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 14px rgba(203, 239, 114, .35); }
+.fi-topbar-actions { display: flex; align-items: center; justify-self: end; gap: clamp(16px, 2.2vw, 28px); }
+.fi-sound { display: flex; align-items: center; gap: 9px; }
+.fi-eq { display: flex; align-items: flex-end; gap: 2px; height: 10px; }
+.fi-eq i { width: 2px; height: 3px; border-radius: 1px; background: currentColor; transition: height .3s; }
+.fi-sound[aria-pressed="true"] { color: var(--lime); }
+.fi-sound[aria-pressed="true"] .fi-eq i { animation: fi-eq 1.1s ease-in-out infinite; }
+.fi-sound[aria-pressed="true"] .fi-eq i:nth-child(2) { animation-delay: -.4s; } .fi-sound[aria-pressed="true"] .fi-eq i:nth-child(3) { animation-delay: -.75s; }
+@keyframes fi-eq { 0%, 100% { height: 3px; } 50% { height: 10px; } }
+.fi-text-button { justify-self: end; padding: 10px 0; color: rgba(238, 243, 234, .72); background: transparent; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; cursor: pointer; }
+.fi-chapter { margin: 0; color: rgba(238, 243, 234, .7); letter-spacing: .12em; }
+.fi-scroll-hint { display: flex; grid-column: 2; align-items: center; gap: 10px; color: rgba(238, 243, 234, .62); will-change: opacity; }
+.fi-scroll-hint i { width: 1px; height: 25px; background: linear-gradient(transparent, var(--lime)); animation: fi-scroll-hint 1.65s ease-in-out infinite; }
+@keyframes fi-scroll-hint { 0% { transform: scaleY(.2); transform-origin: top; opacity: .25; } 55% { transform: scaleY(1); transform-origin: top; opacity: 1; } 100% { transform: scaleY(.15); transform-origin: bottom; opacity: .1; } }
+.fi-progress { position: absolute; z-index: 45; right: 0; top: var(--bar); bottom: var(--bar); width: 1px; background: rgba(238, 243, 234, .14); }
+.fi-progress i { position: absolute; inset: 0; background: var(--lime); transform: scaleY(0); transform-origin: top; box-shadow: 0 0 8px rgba(203, 239, 114, .55); will-change: transform; }
+.fi-preloader { position: fixed; inset: 0; z-index: 3001; display: grid; place-items: center; background: #000; transition: opacity .65s ease, visibility .65s ease; }
+.fi.is-ready .fi-preloader { opacity: 0; visibility: hidden; pointer-events: none; }
+.fi-preloader-track { position: relative; width: min(280px, 60vw); height: 1px; overflow: hidden; background: rgba(203, 239, 114, .15); }
+.fi-preloader-track span { display: block; width: 100%; height: 100%; background: var(--lime); transform: scaleX(0); transform-origin: left; box-shadow: 0 0 12px rgba(203, 239, 114, .6); transition: transform .25s ease; }
+.fi-preloader-count { position: absolute; margin-top: 42px; color: var(--sage); font-size: 10px; letter-spacing: .18em; }
+.fi-debug { position: absolute; z-index: 100; right: 18px; top: calc(var(--bar) + 14px); display: none; padding: 8px 10px; color: var(--lime); background: rgba(0, 0, 0, .65); border: 1px solid rgba(203, 239, 114, .3); font: 11px/1.4 ui-monospace, monospace; text-align: left; white-space: pre; }
+.fi-debug.is-visible { display: block; }
+
+@media (max-width: 700px) {
+  .fi { --bar: clamp(34px, 6.5vh, 52px); --safe-x: 22px; }
+  .fi-stage { min-height: 480px; }
+  .fi-fridge-camera { bottom: 17%; height: min(65vh, 150vw); margin-left: calc(min(65vh, 150vw) / -3); perspective: calc(min(65vh, 150vw) * .76); }
+  .fi-topbar { grid-template-columns: auto 1fr; } .fi-topbar > p { display: none; }
+  .fi-topbar-actions { gap: 16px; }
+  .fi-captions { bottom: calc(var(--bar) + 48px); }
+  .fi-caption { width: 100%; } .fi-caption h1, .fi-caption h2 { font-size: clamp(40px, 12vw, 58px); line-height: .94; }
+  .fi-eyebrow { margin-bottom: 10px; }
+  .fi-dish-wrap { top: 48%; width: min(92vw, 500px); }
+  .fi-dish-glow { top: 46%; width: 100vw; height: 100vw; }
+  .fi-brand { bottom: calc(var(--bar) + 30px); width: calc(100% - 36px); }
+  .fi-brand h2 { font-size: clamp(48px, 13vw, 68px); }
+  .fi-brand-tagline { margin: 12px 0 20px; }
+  .fi-brand-actions { flex-direction: column; align-items: stretch; gap: 8px; } .fi-button { width: 100%; }
+  .fi-bottombar { grid-template-columns: 1fr auto; } .fi-scroll-hint { grid-column: 2; }
+  .fi-scrim { height: 62%; }
+  .fi-ingredient { width: clamp(150px, 42vw, 210px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fi-grain, .fi-fog, .fi-steam i, .fi-scroll-hint i, .fi-sound .fi-eq i { animation: none !important; }
+  .fi-dust, .fi-grain { display: none; }
+}

@@ -1,0 +1,23 @@
+{
+  "expected": {
+    "greek yogurt": "1500 g",
+    "chicken breast": "1",
+    "egg": "12 pieces",
+    "whole milk": "4 l",
+    "skim milk": "2 l",
+    "banana": "1.24 kg",
+    "avocado": "3",
+    "romaine lettuce": "1",
+    "red onion": "1",
+    "yellow onion": "1",
+    "peanut butter": "500 g",
+    "extra virgin olive oil": "1 l",
+    "kalamata olive": "1"
+  },
+  "excluded": [
+    "dish soap",
+    "paper towel",
+    "batteries",
+    "bag"
+  ]
+}

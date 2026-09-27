@@ -1,0 +1,49 @@
+.cooking-voice-control {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) minmax(120px, 210px);
+  align-items: center;
+  gap: 14px;
+  margin: 12px 0 18px;
+  padding: 15px 18px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--card);
+  transition: border-color .2s, background .2s;
+}
+.cooking-voice-control.listening { border-color: var(--berry); }
+.cooking-voice-control.speaking { border-color: var(--mint); }
+.cooking-voice-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 112px;
+  min-height: 48px;
+  padding: 11px 14px;
+  border: 0;
+  border-radius: 15px;
+  color: var(--ink);
+  background: var(--soft);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+.cooking-voice-button svg { width: 21px; height: 21px; flex: none; }
+.cooking-voice-button[aria-pressed="true"] { color: white; background: var(--berry); }
+.cooking-voice-button:focus-visible { outline: 3px solid var(--berry); outline-offset: 4px; }
+.cooking-voice-copy { min-width: 0; }
+.cooking-voice-copy strong { display: block; color: var(--ink); font-size: 14px; font-weight: 800; }
+.cooking-voice-copy small { display: block; margin-top: 4px; color: var(--muted); font-size: 12px; line-height: 1.5; }
+.cooking-voice-transcript { grid-column: 1 / -1; display: grid; gap: 5px; padding-top: 12px; border-top: 1px solid var(--line); }
+.cooking-voice-transcript p { display: flex; align-items: baseline; gap: 9px; margin: 0; color: var(--muted); font-size: 12px; line-height: 1.55; }
+.cooking-voice-transcript b { flex: 0 0 32px; color: var(--ink); font-size: 11px; }
+.cooking-voice-transcript span { display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow-wrap: anywhere; }
+.cooking-voice-transcript .voice-error { color: #b92f48; }
+@media (max-width: 640px) {
+  .cooking-voice-control { grid-template-columns: auto minmax(0, 1fr); gap: 12px; padding: 14px; }
+  .cooking-voice-button { min-width: 99px; padding-inline: 10px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cooking-voice-control { transition: none; }
+}

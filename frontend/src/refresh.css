@@ -1,0 +1,197 @@
+/* Components added in the 2026 refresh: photos, AI ideas, impact, voice, shopping. */
+
+/* ---------- Ingredient emoji: one centred glyph in a fixed tile ---------- */
+.ingredient-emoji {
+  display: grid;
+  place-items: center;
+  flex: none;
+  overflow: hidden;
+  line-height: 1;
+  font-family: var(--font-emoji);
+}
+.ingredient-emoji > span {
+  display: block;
+  font-size: .56em;
+  line-height: 1;
+  transform: translateY(.02em);
+}
+.ingredient-emoji { font-size: 46px; }
+.ingredient-emoji.small { font-size: 34px; }
+.expiry-card > .ingredient-emoji { width: 48px; height: 48px; font-size: 48px; border-radius: 15px; background: color-mix(in srgb, var(--soft) 80%, white); }
+.expiry-card > .ingredient-emoji > span { font-size: .54em; }
+
+/* ---------- Recipe photos ---------- */
+.recipe-art { position: relative; display: block; width: 100%; height: 100%; }
+.recipe-photo { opacity: 0; transition: opacity .6s ease, transform 1.2s cubic-bezier(.2,.7,.2,1); transform: scale(1.04); }
+.recipe-photo.is-loaded { opacity: 1; transform: none; }
+@keyframes art-shimmer { from { background-position: 130% 0; } to { background-position: -130% 0; } }
+
+/* ---------- AI recipe ideas ---------- */
+.ai-choice-section { margin: 8px 0 36px; }
+.ai-choice-section > h2 { margin: 2px 0 18px; font-size: clamp(26px, 3vw, 34px); }
+.ai-choice-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.ai-title-card {
+  display: flex; flex-direction: column; overflow: hidden; min-width: 0; padding: 0;
+  border: 1px solid var(--line); border-radius: 22px; background: var(--card); color: var(--ink);
+  box-shadow: 0 1px 0 rgba(12,58,53,.03);
+  animation: idea-rise .55s cubic-bezier(.2,.7,.2,1) both;
+  animation-delay: calc(var(--card-index, 0) * 90ms);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.ai-title-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+.ai-title-main { display: flex; flex-direction: column; padding: 0; border: 0; color: inherit; background: none; text-align: left; }
+.ai-title-copy { padding: 18px 20px 6px; }
+.ai-title-copy span { color: var(--mint); font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+.ai-title-copy h3 {
+  display: -webkit-box; margin: 7px 0 0; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2;
+  font-size: 22px; line-height: 1.12; overflow-wrap: anywhere;
+}
+.ai-title-card > footer { display: grid; gap: 12px; margin-top: auto; padding: 12px 20px 18px; }
+.ai-title-stock { color: var(--muted); font-size: 12px; }
+.ai-title-stock b { color: var(--ink); }
+.ai-title-card > footer > div { display: flex; flex-wrap: wrap; gap: 8px; }
+.ai-title-action {
+  display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 12px;
+  border: 1px solid var(--line); border-radius: 11px; color: var(--ink); background: transparent;
+  font-size: 12px; font-weight: 700;
+}
+.ai-title-action svg { width: 15px; height: 15px; }
+.ai-title-action.primary { border-color: transparent; color: var(--deep); background: var(--lime); }
+.ai-title-action:disabled { opacity: .7; }
+.ai-title-card.is-skeleton { pointer-events: none; }
+.ai-title-card.is-skeleton span, .ai-title-card.is-skeleton h3, .ai-title-card.is-skeleton small {
+  background: linear-gradient(100deg, var(--soft) 30%, color-mix(in srgb, var(--soft) 55%, white) 50%, var(--soft) 70%);
+  background-size: 250% 100%;
+  animation: art-shimmer 1.4s ease-in-out infinite;
+}
+.ai-title-card.is-skeleton > div:last-child { display: grid; gap: 10px; padding: 20px; }
+.ai-title-card.is-skeleton span { display: block; width: 40%; height: 10px; border-radius: 6px; }
+.ai-title-card.is-skeleton h3 { width: 80%; height: 22px; margin: 0; border-radius: 8px; }
+.ai-title-card.is-skeleton small { display: block; width: 55%; height: 12px; border-radius: 6px; }
+@keyframes idea-rise { from { opacity: 0; transform: translateY(18px) scale(.98); } }
+
+/* ---------- Search ---------- */
+.search-field { position: relative; }
+.search-clear {
+  position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+  display: grid; width: 32px; height: 32px; place-items: center; padding: 0;
+  border: 0; border-radius: 10px; color: var(--muted); background: var(--soft);
+}
+.search-clear svg { width: 15px; height: 15px; }
+.results-count { margin: -4px 0 14px; color: var(--muted); font-size: 13px; font-weight: 600; }
+
+/* ---------- Shopping list ---------- */
+.shopping-clear { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 10px; margin: 12px 0 16px; }
+.shopping-clear button {
+  display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 12px;
+  border: 1px solid var(--line); border-radius: 11px; color: var(--muted); background: var(--card);
+  font-size: 12px; font-weight: 700;
+}
+.shopping-clear button svg { width: 15px; height: 15px; }
+.shopping-clear.confirming { justify-content: space-between; padding: 12px 14px; border: 1px solid #f3c3b6; border-radius: 16px; background: var(--blush); }
+.shopping-clear.confirming > span { color: var(--ink); font-size: 13px; font-weight: 700; }
+.shopping-clear button.danger { border-color: transparent; color: white; background: #c8452c; }
+.pantry-shopping-group.is-complete { animation: list-done 1.1s ease forwards; }
+.pantry-shopping-group.is-complete > header strong::after { content: " ✓"; }
+@keyframes list-done {
+  0% { box-shadow: 0 0 0 0 rgba(40,151,109,.45); }
+  35% { box-shadow: 0 0 0 10px rgba(40,151,109,0); border-color: var(--mint); }
+  75% { opacity: 1; transform: none; }
+  100% { opacity: 0; transform: translateY(-6px) scale(.98); }
+}
+
+/* ---------- Food waste impact ---------- */
+.impact-panel {
+  margin: 0 0 38px; padding: clamp(22px, 3vw, 32px);
+  border: 0; border-radius: 28px; color: #eef6ea;
+  background:
+    radial-gradient(120% 90% at 100% 0%, rgba(203,239,114,.16), transparent 55%),
+    linear-gradient(140deg, #0c3a35, #11493f 60%, #0e3f37);
+  box-shadow: 0 24px 60px rgba(12,58,53,.18);
+}
+.impact-panel > header { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; margin-bottom: 22px; }
+.impact-panel .eyebrow { margin: 0 0 6px; color: var(--lime); }
+.impact-panel h2 { margin: 0; color: white; font-size: clamp(24px, 2.6vw, 30px); }
+.impact-panel .impact-leaf { display: grid; width: 46px; height: 46px; place-items: center; border-radius: 15px; background: rgba(203,239,114,.14); font-size: 22px; }
+.impact-hero { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.6fr); gap: 18px; align-items: stretch; }
+.impact-big { display: flex; flex-direction: column; justify-content: center; padding: 18px 20px; border-radius: 20px; background: rgba(255,255,255,.06); }
+.impact-big strong { color: var(--lime); font-family: var(--font-display); font-size: clamp(54px, 7vw, 78px); font-weight: 800; line-height: .9; letter-spacing: -.05em; }
+.impact-big span { margin-top: 8px; color: white; font-size: 16px; font-weight: 700; }
+.impact-big small { margin-top: 4px; color: #a9c5b6; font-size: 12px; }
+.impact-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.impact-stats > div { display: flex; flex-direction: column; justify-content: flex-end; min-width: 0; padding: 16px; border-radius: 18px; background: rgba(255,255,255,.06); }
+.impact-stats strong { color: white; font-family: var(--font-display); font-size: clamp(22px, 2.4vw, 30px); font-weight: 800; letter-spacing: -.035em; }
+.impact-stats span { margin-top: 4px; color: #a9c5b6; font-size: 12px; line-height: 1.35; }
+.impact-trend { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 8px; height: 112px; margin: 22px 0 6px; align-items: end; }
+.impact-trend > div { display: grid; grid-template-rows: 16px 1fr 16px; height: 100%; justify-items: center; gap: 4px; }
+.impact-trend b { color: var(--lime); font-size: 11px; }
+.impact-trend i { align-self: end; width: min(100%, 34px); min-height: 3px; border-radius: 8px 8px 3px 3px; background: rgba(203,239,114,.35); transition: height .6s cubic-bezier(.2,.7,.2,1); }
+.impact-trend .current i { background: var(--lime); }
+.impact-trend span { color: #8fb09f; font-size: 10px; white-space: nowrap; }
+.impact-panel .impact-events { display: grid; gap: 8px; margin-top: 16px; }
+.impact-panel .impact-events > div { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 14px; background: rgba(255,255,255,.06); }
+.impact-panel .impact-events .ingredient-emoji { background: rgba(255,255,255,.1); }
+.impact-panel .impact-events p { display: grid; flex: 1; gap: 2px; margin: 0; min-width: 0; }
+.impact-panel .impact-events strong { color: white; font-size: 14px; }
+.impact-panel .impact-events small { color: #a9c5b6; font-size: 12px; }
+.impact-panel .impact-events em { color: var(--lime); font-size: 12px; font-style: normal; font-weight: 700; }
+.impact-at-risk { display: flex; align-items: center; gap: 12px; margin-top: 16px; padding: 14px 16px; border: 1px solid rgba(203,239,114,.3); border-radius: 16px; background: rgba(203,239,114,.08); }
+.impact-at-risk > span { font-size: 22px; }
+.impact-at-risk > div { display: grid; flex: 1; gap: 3px; min-width: 0; }
+.impact-at-risk strong { color: white; font-size: 14px; }
+.impact-at-risk small { overflow: hidden; color: #b8d2c3; font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+.impact-at-risk button { display: inline-flex; align-items: center; gap: 6px; flex: none; min-height: 40px; padding: 0 14px; border: 0; border-radius: 12px; color: var(--deep); background: var(--lime); font-size: 13px; font-weight: 800; }
+.impact-at-risk button svg { width: 15px; height: 15px; }
+.impact-at-risk button:disabled { opacity: .5; }
+.impact-empty { margin: 16px 0 0; color: #c9ddcf; font-size: 14px; line-height: 1.55; }
+.impact-panel .impact-note { display: block; margin-top: 16px; color: #8fb09f; font-size: 11px; line-height: 1.6; }
+.impact-panel .rescue-accomplishment { margin-bottom: 18px; border-radius: 16px; color: var(--deep); background: var(--lime); }
+.impact-panel .rescue-accomplishment small, .impact-panel .rescue-accomplishment p, .impact-panel .rescue-accomplishment b, .impact-panel .rescue-accomplishment strong { color: var(--deep) !important; }
+.impact-panel .rescue-accomplishment p { opacity: .8; }
+
+/* ---------- Voice waveform (cooking mode) ---------- */
+.voice-waveform { position: relative; display: flex; height: 54px; align-items: center; color: color-mix(in srgb, var(--muted) 55%, transparent); transition: color .3s ease; }
+.voice-waveform canvas { display: block; width: 100%; height: 100%; }
+.voice-waveform.listening { color: var(--berry); }
+.voice-waveform.speaking { color: var(--mint); }
+.voice-waveform.processing, .voice-waveform.connecting { color: var(--lime); }
+.voice-waveform-label {
+  position: absolute; left: 0; top: -2px; z-index: 1; padding: 2px 8px; border-radius: 999px;
+  color: white; background: currentColor; font-size: 10px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase;
+}
+.voice-waveform.listening .voice-waveform-label { background: var(--berry); }
+.voice-waveform.speaking .voice-waveform-label { background: var(--mint); }
+.cooking-voice-control { grid-template-columns: auto minmax(0, 1fr) minmax(160px, 300px); }
+.cooking-voice-control.listening { border-color: var(--berry); box-shadow: 0 0 0 4px color-mix(in srgb, var(--berry) 14%, transparent); }
+.cooking-voice-control.speaking { border-color: var(--mint); box-shadow: 0 0 0 4px color-mix(in srgb, var(--mint) 14%, transparent); }
+.current-instruction h2 { font-size: clamp(20px, 2.1vw, 27px); font-weight: 650; line-height: 1.38; letter-spacing: -.015em; }
+
+@media (max-width: 900px) {
+  .ai-choice-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .impact-hero { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .ai-choice-grid { grid-template-columns: 1fr; }
+  .impact-stats { grid-template-columns: 1fr 1fr; }
+  .impact-stats > div:last-child { grid-column: 1 / -1; }
+  .impact-at-risk { flex-wrap: wrap; }
+  .cooking-voice-control { grid-template-columns: auto minmax(0, 1fr); }
+  .voice-waveform { grid-column: 1 / -1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ai-title-card, .pantry-shopping-group.is-complete { animation: none !important; }
+  .recipe-photo { transition: none; opacity: 1; transform: none; }
+}
+
+/* Suggestions placeholder while recommendations rank. */
+.recipe-card.is-skeleton { display: grid; gap: 12px; min-height: 360px; padding: 0 0 22px; overflow: hidden; pointer-events: none; }
+.recipe-card.is-skeleton > div { height: 190px; }
+.recipe-card.is-skeleton > span { display: block; height: 16px; margin: 0 22px; border-radius: 8px; }
+.recipe-card.is-skeleton > span:last-child { width: 55%; }
+.recipe-card.is-skeleton > div, .recipe-card.is-skeleton > span {
+  background: linear-gradient(100deg, var(--soft) 30%, color-mix(in srgb, var(--soft) 55%, white) 50%, var(--soft) 70%);
+  background-size: 250% 100%;
+  animation: art-shimmer 1.4s ease-in-out infinite;
+}
+/* The decorative colour disc belongs to illustrated cards, not photographs. */
+.recipe-visual:has(.recipe-photo)::before, .recipe-visual:has(.recipe-photo)::after { display: none; }

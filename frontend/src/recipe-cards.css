@@ -1,0 +1,68 @@
+/* Recipe artwork, diet fallbacks, the use-soon filter, AI ideas and the replay button (user testing). */
+
+/* A recipe without a photo (every AI recipe) shows its main foods on a plate. The artwork
+   fills whatever holds it, so it can size itself to that box. */
+.recipe-art { container-type: size; }
+.recipe-visual > .recipe-art, .detail-food > .recipe-art, .cooking-photo > .recipe-art { position: absolute; inset: 0; }
+.detail-food:has(> .recipe-art), .cooking-photo:has(> .recipe-art) { position: relative; overflow: hidden; filter: none; }
+.food-art { position: relative; display: grid; width: 100%; height: 100%; place-items: center; overflow: hidden;
+  background:
+    radial-gradient(circle at 86% 12%, color-mix(in srgb, var(--fa-accent) 62%, transparent) 0 13%, transparent 13.5%),
+    radial-gradient(circle at 6% 104%, color-mix(in srgb, var(--fa-accent) 38%, transparent) 0 27%, transparent 27.5%),
+    linear-gradient(155deg, var(--fa-paper), color-mix(in srgb, var(--fa-accent) 34%, var(--fa-paper))); }
+.food-art-plate { display: grid; width: 60cqmin; aspect-ratio: 1; place-items: center; border-radius: 50%;
+  background: radial-gradient(circle at 42% 36%, #fffdf8, #f3ede3 60%, #ddd3c4);
+  box-shadow: 0 2cqmin 5cqmin rgb(60 40 20 / .18), inset 0 0 0 3cqmin rgb(255 255 255 / .55); }
+.food-art i { font-style: normal; line-height: 1; filter: drop-shadow(0 .8cqmin 1.2cqmin rgb(0 0 0 / .16)); }
+.food-art-main { font-size: 30cqmin; }
+.food-art-side { position: absolute; font-size: 16cqmin; }
+.food-art-side.side-1 { left: 11%; top: 13%; transform: rotate(-12deg); }
+.food-art-side.side-2 { right: 11%; bottom: 13%; transform: rotate(10deg); }
+.food-art-side.side-3 { right: 13%; top: 11%; transform: rotate(8deg); }
+/* Tiny thumbnails (the cooking header) keep only the main food. */
+@container (max-width: 130px) {
+  .food-art-side { display: none; }
+  .food-art-plate { width: 78cqmin; }
+  .food-art-main { font-size: 42cqmin; }
+}
+
+/* The screen under an open recipe stays mounted, so it keeps its scroll and AI ideas. */
+.tab-view { display: contents; }
+.tab-view[hidden] { display: none; }
+
+/* AI ideas are text cards: the idea, its time and name, and what the pantry covers. */
+.ai-choice-heading { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px 18px; margin-bottom: 18px; }
+.ai-choice-heading h2 { margin: 2px 0 0; font-size: clamp(26px, 3vw, 34px); }
+.ai-choice-clear { display: inline-flex; align-items: center; gap: 6px; padding: 9px 14px; border: 1px solid var(--line); border-radius: 999px; color: var(--ink); background: var(--card); font-size: 12px; font-weight: 750; cursor: pointer; }
+.ai-choice-clear svg { width: 14px; }
+.ai-title-card .ai-title-copy { padding-top: 22px; }
+.ai-title-card .ai-title-copy h3 { -webkit-line-clamp: 3; }
+
+.swap-retry { padding: 0; border: 0; color: var(--mint); background: none; font: inherit; font-weight: 800; text-decoration: underline; cursor: pointer; }
+
+/* A recipe that breaks a saved diet: shown only after every recipe that fits, and labelled. */
+.diet-conflict-badge { position: absolute; z-index: 4; left: 14px; bottom: 13px; display: inline-flex; align-items: center; gap: 5px; max-width: calc(100% - 28px); padding: 7px 10px; overflow: hidden; border-radius: 999px; color: #fff; background: rgba(122, 32, 38, .9); font-size: 10px; font-weight: 850; white-space: nowrap; text-overflow: ellipsis; }
+.diet-conflict-badge svg { flex: none; width: 13px; }
+.diet-fallback-divider { display: grid; grid-column: 1 / -1; gap: 4px; margin: 10px 0 2px; padding: 16px 18px; border: 1px dashed var(--line); border-radius: 18px; color: var(--ink); background: var(--card); }
+.diet-fallback-divider strong { font-size: 15px; }
+.diet-fallback-divider span { color: var(--muted); font-size: 13px; }
+
+/* "Use soon" on the home screen opens the recipes that use that food. */
+.use-soon-focus { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 12px 18px; margin: 0 0 18px; padding: 18px 20px; border: 1px solid rgba(214, 120, 60, .25); border-radius: 22px; background: linear-gradient(135deg, rgba(255, 238, 223, .95), rgba(255, 250, 239, .95)); }
+.use-soon-focus .eyebrow { display: inline-flex; align-items: center; gap: 6px; margin: 0; color: #b3471d; }
+.use-soon-focus .eyebrow svg { width: 14px; }
+.use-soon-focus h2 { margin: 2px 0 4px; font-size: 20px; }
+.use-soon-focus p { margin: 0; color: var(--muted); font-size: 13px; }
+.use-soon-chips { display: flex; grid-column: 1 / -1; flex-wrap: wrap; gap: 8px; }
+.use-soon-chips > span { display: inline-flex; align-items: center; gap: 6px; padding: 5px 11px 5px 5px; border-radius: 999px; background: rgba(255, 255, 255, .85); font-size: 12px; font-weight: 750; }
+.use-soon-focus > button { display: inline-flex; grid-row: 1; grid-column: 2; align-items: center; gap: 6px; padding: 10px 14px; border: 1px solid var(--line); border-radius: 999px; color: var(--ink); background: var(--card); font-size: 12px; font-weight: 750; cursor: pointer; }
+.use-soon-focus > button svg { width: 14px; }
+:root[data-theme="dark"] .use-soon-focus { border-color: rgba(255, 170, 110, .25); background: linear-gradient(135deg, rgba(72, 50, 40, .95), rgba(56, 58, 42, .95)); }
+:root[data-theme="dark"] .use-soon-focus .eyebrow { color: #ffb489; }
+:root[data-theme="dark"] .use-soon-chips > span { background: rgba(0, 0, 0, .25); }
+@media (max-width: 640px) {
+  .use-soon-focus { grid-template-columns: 1fr; }
+  .use-soon-focus > button { grid-row: auto; grid-column: 1; justify-self: start; }
+}
+
+.replay-opening-button svg { fill: currentColor; stroke: none; }

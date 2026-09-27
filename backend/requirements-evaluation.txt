@@ -1,0 +1,25 @@
+# Optional dependencies for reproducing the historical YOLO-World detector
+# training/evaluation. They are intentionally excluded from the live app.
+-r requirements.txt
+
+clip @ git+https://github.com/ultralytics/CLIP.git@a13192f8cb767260d7dfd98c843b0716593169e7
+ultralytics==8.4.82
+ultralytics-thop==2.0.20
+
+# Pinned dependencies of the packages above.
+contourpy==1.3.3
+cycler==0.12.1
+ftfy==6.3.1
+fonttools==4.63.0
+kiwisolver==1.5.0
+matplotlib==3.11.0
+nvidia-ml-py==13.610.43
+opencv-python==4.13.0.92
+polars==1.42.0
+polars-runtime-32==1.42.0
+psutil==7.2.2
+pyparsing==3.3.2
+python-dateutil==2.9.0.post0
+six==1.17.0
+torchvision==0.27.1
+wcwidth==0.8.3

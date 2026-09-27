@@ -1,0 +1,35 @@
+{
+  "name": "frontend",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "oxlint",
+    "preview": "vite preview",
+    "capture:tour": "node scripts/capture-walkthrough.mjs",
+    "test:system": "node scripts/system-smoke.mjs",
+    "test": "node --experimental-strip-types --test tests/recipeFilters.test.ts tests/voiceCommands.test.ts"
+  },
+  "dependencies": {
+    "@fontsource-variable/inter": "^5.3.0",
+    "@fontsource-variable/inter-tight": "^5.3.0",
+    "@tailwindcss/vite": "^4.3.1",
+    "axios": "^1.18.1",
+    "gsap": "^3.15.0",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
+  },
+  "devDependencies": {
+    "@types/node": "^24.13.2",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.2",
+    "oxlint": "^1.69.0",
+    "playwright-core": "^1.63.0",
+    "tailwindcss": "^4.3.1",
+    "typescript": "~6.0.2",
+    "vite": "^8.1.0"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "description": "Schema example. Use label_household_photos.py init and serve to create the real ignored manifest from consented household photographs.",
+  "development": [
+    {
+      "id": "dev-fridge-001",
+      "image": "images/dev-fridge-001.jpg",
+      "scene_type": "fridge",
+      "packaging": "mixed",
+      "difficulty": "moderate",
+      "annotation_status": "verified",
+      "annotation_method": "independent_human",
+      "annotator": "annotator-1",
+      "second_review_status": "not_reviewed",
+      "draft_predictions": {},
+      "draft_revealed": false,
+      "ingredients": [
+        {"name": "milk", "aliases": ["whole milk"]},
+        {"name": "eggs", "aliases": ["egg"]},
+        {"name": "broccoli", "aliases": []}
+      ]
+    }
+  ],
+  "test": [
+    {
+      "id": "test-table-001",
+      "image": "images/test-table-001.jpg",
+      "scene_type": "grocery_table",
+      "packaging": "mixed",
+      "difficulty": "high",
+      "annotation_status": "verified",
+      "annotation_method": "independent_human",
+      "annotator": "annotator-1",
+      "second_review_status": "agreed",
+      "draft_predictions": {},
+      "draft_revealed": false,
+      "ingredients": [
+        {"name": "bananas", "aliases": ["banana"]},
+        {"name": "pineapple", "aliases": []},
+        {"name": "milk", "aliases": ["milk carton"]}
+      ]
+    }
+  ]
+}

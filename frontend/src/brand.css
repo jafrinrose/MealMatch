@@ -1,0 +1,53 @@
+/*
+ * Brand layer, loaded last. Typography follows wise.com: Inter for text (their
+ * body face) and a heavy, tightly set display sans for headings. Wise Sans is
+ * proprietary, so Inter Tight at 800 stands in for it.
+ */
+:root {
+  --font-body: "Inter Variable", Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Inter Tight Variable", "Inter Variable", Inter, system-ui, sans-serif;
+  --font-emoji: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+  font-family: var(--font-body);
+  font-feature-settings: "ss01", "cv11";
+}
+body, button, input, select, textarea { font-family: inherit; }
+h1, h2, h3, .brand-mark strong, .donut-total strong, .rescue-accomplishment strong, .ready-timer > strong, .countdown-large, .step-number {
+  font-family: var(--font-display) !important;
+  letter-spacing: -.035em;
+}
+h1 { font-weight: 800; letter-spacing: -.045em; }
+h2 { font-weight: 800; }
+h3 { font-weight: 700; letter-spacing: -.02em; }
+.page-header h1, .home-hero h2, .detail-hero-copy h1 { line-height: .98; }
+
+/* Banana cursor: rendered to PNG at start-up (src/bananaCursor.ts). */
+/* !important: many component rules set cursor: pointer with more specific selectors. */
+@media (pointer: fine) {
+  html, body { cursor: var(--banana-cursor, auto), auto; }
+  a, button, [role="button"], select, label, summary, [tabindex="0"], .recipe-card-main, .donut-segment { cursor: var(--banana-pointer, pointer), pointer !important; }
+  input, textarea, [contenteditable="true"] { cursor: text !important; }
+  button:disabled, [aria-disabled="true"] { cursor: not-allowed !important; }
+}
+
+/* "MM" sits in the emblem ring on the mascot's hat. The ring's centre and size
+   were measured from chef-mascot.webp (52.28% / 21.36%, inner opening 11.6% of
+   the width); sizing in container units keeps it inside at every screen size. */
+.chef-mascot { container-type: inline-size; }
+.chef-hat-badge {
+  left: 52.28% !important;
+  top: 21.36% !important;
+  width: 10.4% !important;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  transform: translate(-50%, -50%) !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: #173f2c !important;
+  font-family: var(--font-display) !important;
+  font-size: 4.3cqw !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  letter-spacing: -.06em !important;
+}

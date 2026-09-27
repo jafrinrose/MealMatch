@@ -1,0 +1,20 @@
+{
+  "expected": {
+    "chicken thigh": "1",
+    "shrimp": "2",
+    "baguette": "3",
+    "strawberry": "1",
+    "brie": "1",
+    "whipping cream": "1 l",
+    "feta": "1",
+    "english cucumber": "3 pieces",
+    "russet potato": "4.54 kg",
+    "jasmine rice": "8 kg",
+    "sparkling water": "24 pieces"
+  },
+  "excluded": [
+    "paper towel",
+    "tide",
+    "bath tissue"
+  ]
+}
